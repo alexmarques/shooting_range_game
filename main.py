@@ -3,6 +3,7 @@ import pygame, sys, random
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 clock = pygame.time.Clock()
+pygame.mouse.set_visible(False)
 
 wood_bg = pygame.image.load('assets/Wood_BG.png')
 land_bg = pygame.image.load('assets/Land_BG.png')
@@ -11,6 +12,10 @@ cloud_1 = pygame.image.load('assets/Cloud1.png')
 cloud_2 = pygame.image.load('assets/Cloud2.png')
 crosshair = pygame.image.load('assets/crosshair.png')
 duck = pygame.image.load('assets/duck.png')
+font = pygame.font.Font(None, 120)
+text_surface = font.render('You Won!', True, (255, 255, 255))
+text_rect = text_surface.get_rect(center = (640, 360))
+
 
 land_position_y = 560
 land_speed = 1
@@ -35,13 +40,16 @@ while True:
             crosshair_rect = crosshair.get_rect(center = event.pos)
         if event.type == pygame.MOUSEBUTTONDOWN:
             for index, duck_rect in enumerate(duck_list):
-                if duck_rect.colliderect(crosshair_rect):
+                if duck_rect.collidepoint(event.pos):
                     del duck_list[index]
     
     screen.blit(wood_bg, (0,0))
 
     for duck_rect in duck_list:
         screen.blit(duck, duck_rect)
+
+    if len(duck_list) == 0:
+        screen.blit(text_surface, text_rect)
     
     land_position_y += land_speed
     if land_position_y <= 520 or land_position_y >= 600:
