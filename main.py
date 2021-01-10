@@ -9,6 +9,7 @@ land_bg = pygame.image.load('assets/Land_BG.png')
 water_bg = pygame.image.load('assets/Water_BG.png')
 cloud_1 = pygame.image.load('assets/Cloud1.png')
 cloud_2 = pygame.image.load('assets/Cloud2.png')
+crosshair = pygame.image.load('assets/crosshair.png')
 
 land_position_y = 560
 land_speed = 1
@@ -21,6 +22,8 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.MOUSEMOTION:
+            crosshair_rect = crosshair.get_rect(center = event.pos)
     
     screen.blit(wood_bg, (0,0))
     
@@ -35,6 +38,8 @@ while True:
         water_speed *= -1
 
     screen.blit(water_bg, (0, water_position_y))
+
+    screen.blit(crosshair, crosshair_rect)
 
     screen.blit(cloud_1, (200,50))
     screen.blit(cloud_2, (250,50))
